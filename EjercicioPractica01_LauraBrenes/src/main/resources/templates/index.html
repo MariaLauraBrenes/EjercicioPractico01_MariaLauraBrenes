@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/iframe :: head}">
+<title>Farmacia</title>        
+</head>
+ 
+<body>
+
+<header th:replace="~{plantilla/iframe :: header}"></header>
+ 
+<main class="container mt-4">
+<section id="pharmacy-info" class="my-4">
+<p>Welcome to our pharmacy! We provide a wide range of healthcare products and personalized services.</p>
+</section>
+    
+<section id="video-section" class="my-4">
+<h2>Featured Medication</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jrSrRyLf0vU?si=xA5jabSIki3qBayR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</section>    
+ 
+<footer th:replace="~{plantilla/iframe :: footer}"></footer>
+</body>
+</html>
+
+ 
+
+
+
