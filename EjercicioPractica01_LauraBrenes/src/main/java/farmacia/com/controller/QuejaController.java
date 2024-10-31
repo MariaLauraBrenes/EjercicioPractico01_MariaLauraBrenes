@@ -20,7 +20,7 @@ public class QuejaController {
     @Autowired
     private QuejaService quejaService;
  
-    @PostMapping("/submit")
+    @PostMapping("/quejas")
     public String submitQueja(
             @RequestParam("nombre") String nombre,
             @RequestParam("apellido") String apellido,
