@@ -30,5 +30,11 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
+    public Categoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    
+    
     
 }

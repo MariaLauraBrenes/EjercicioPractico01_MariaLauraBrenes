@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{product.title}">Lista de Productos</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header th:replace="~{/plantilla/iframe :: header}"></header>
+
+<main class="container mt-5">
+    <h2 th:text="#{product.title}">Lista de Productos</h2>
+    <a th:href="@{/productos/modificar}" class="btn btn-primary mb-3" th:text="#{product.add}">Agregar Nuevo Producto</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th th:text="#{product.name}">Nombre</th>
+                <th th:text="#{product.description}">Descripción</th>
+                <th th:text="#{product.price}">Precio</th>
+                <th th:text="#{product.stock}">Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="producto : ${productos}">
+                <td th:text="${producto.idMedicamento}"></td>
+                <td th:text="${producto.nombre}"></td>
+                <td th:text="${producto.descripcion}"></td>
+                <td th:text="${producto.precio}"></td>
+                <td th:text="${producto.stock}"></td>
+                <td>
+                    <a th:href="@{/productos/modificar/{id}(id=${producto.idMedicamento})}" class="btn btn-warning btn-sm" th:text="#{button.edit}">Editar</a>
+                    <a th:href="@{/productos/eliminar/{id}(id=${producto.idMedicamento})}" class="btn btn-danger btn-sm" th:text="#{button.delete}" onclick="return confirm('#{product.confirm_delete}');">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{/plantilla/iframe :: footer}"></footer>
+</body>
+</html>
+

@@ -6,52 +6,44 @@ package farmacia.com.controller;
 
 import farmacia.com.domain.Producto;
 import farmacia.com.Service.ProductoService;
-/*import farmacia.com.impl.FirebaseStorageServiceImpl; */
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.bind.annotation.*;
+ 
 @Controller
-@Slf4j
-@RequestMapping("/producto")
+@RequestMapping("/productos")
 public class ProductoController {
-    
+ 
     @Autowired
     private ProductoService productoService;
-
+ 
+ 
     @GetMapping("/listas")
-    public String inicio(Model model) {
+    public String listarProductos(Model model) {
         var productos = productoService.getProductos();
         model.addAttribute("productos", productos);
-        model.addAttribute("totalCategorias", productos.size());
-        return "/producto/listas";
+        return "productos/listas";
     }
-    
-    /*
-    
-    @GetMapping("/modifica")
-    public String categoriaNuevo(Categoria categoria) {
-        return "/categoria/modifica";
-    }
-    
-    
-    @GetMapping("/eliminar/{idCategoria}")
-    public String categoriaEliminar(Categoria categoria) {
-        categoriaService.delete(categoria);
-        return "redirect:/categoria/listado";
-    }
-    @GetMapping("/modificar/{idCategoria}")
-    public String categoriaModificar(Categoria categoria, Model model) {
-        categoria = categoriaService.getCategoria(categoria);
-        model.addAttribute("categoria", categoria);
-        return "/categoria/modifica";
-    }
- */
-}
  
+    @GetMapping("/modificar/{id}")
+    public String editarProducto(@PathVariable("id") int id, Model model) {
+        Producto producto = productoService.getProducto(new Producto(id));
+        model.addAttribute("producto", producto);
+        return "productos/modificar";
+    }
+ 
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProducto(@PathVariable("id") int id) {
+        Producto producto = new Producto();
+        producto.setIdMedicamento(id);
+        productoService.delete(producto);
+        return "redirect:/productos/listas";
+    }
+ 
+    @PostMapping("/guardar")
+    public String guardarProducto(Producto producto) {
+        productoService.save(producto);
+        return "redirect:/productos/listas";
+    }
+}

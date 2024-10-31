@@ -23,17 +23,21 @@ public class Producto implements Serializable {
     private String descripcion;
     private double precio;
     private int stock;
-    private Categoria categoria;
-
+    
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, double precio, int stock, Categoria categoria) {
-        this.idMedicamento = idMedicamento;        this.nombre = nombre;
+    public Producto(int idMedicamento) {
+        this.idMedicamento = idMedicamento;
+    }
+    
+
+
+    public Producto(String nombre, String descripcion, double precio, int stock) {
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
-        this.categoria = categoria;
     }
     
     

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${categoria?.idCategoria != null ? #{categoria.edit} : #{categoria.add}}">Modificar Categoría</title>
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+ 
+<header th:replace="~{plantilla/iframe :: header}"></header>
+ 
+<main class="container mt-5">
+<h2 th:text="${categoria?.idCategoria != null ? #{categoria.edit} : #{categoria.add}}">Editar Categoría</h2>
+ 
+    <form th:action="@{/categorias/guardar}" th:object="${categoria}" method="post">
+<div class="mb-3">
+<label for="nombre" class="form-label" th:text="#{categoria.nombre}">Nombre de la Categoría</label>
+<input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}" required>
+</div>
+<div class="mb-3">
+<label for="descripcion" class="form-label" th:text="#{categoria.descripcion}">Descripción</label>
+<textarea class="form-control" id="descripcion" name="descripcion" th:field="*{descripcion}" required></textarea>
+</div>
+<button type="submit" class="btn btn-success" th:text="#{button.save}">Guardar</button>
+<a th:href="@{/categorias/listas}" class="btn btn-secondary" th:text="#{button.cancel}">Cancelar</a>
+</form>
+</main>
+ 
+<footer th:replace="~{plantilla/iframe :: footer}"></footer>
+</body>
+</html>

@@ -6,66 +6,49 @@ package farmacia.com.controller;
 
 import farmacia.com.domain.Categoria;
 import farmacia.com.Service.CategoriaService;
-/*import farmacia.com.impl.FirebaseStorageServiceImpl; */
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
+
 @RequestMapping("/categorias")
 public class CategoriaController {
-    
+ 
     @Autowired
     private CategoriaService categoriaService;
-
+ 
     @GetMapping("/listas")
-    public String inicio(Model model) {
+    public String listarCategorias(Model model) {
         var categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
-        model.addAttribute("totalCategorias", categorias.size());
-        return "/categorias/listas";
+        return "categorias/listas";
     }
-    
-    /*
-    
-    @GetMapping("/modifica")
-    public String categoriaNuevo(Categoria categoria) {
-        return "/categoria/modifica";
-    }
-    
-    @Autowired
-    private FirebaseStorageServiceImpl firebaseStorageService;
-    
-    @PostMapping("/guardar")
-    public String categoriaGuardar(Categoria categoria,
-            @RequestParam("imagenFile") MultipartFile imagenFile) {
-        if (!imagenFile.isEmpty()) {
-            categoriaService.save(categoria);
-            categoria.setRutaImagen(firebaseStorageService.cargaImagen(imagenFile, "categoria", categoria.getIdCategoria()));
-            
-        }
-        categoriaService.save(categoria);
-        return "redirect:/categoria/listado";
-    }
-    
-    @GetMapping("/eliminar/{idCategoria}")
-    public String categoriaEliminar(Categoria categoria) {
-        categoriaService.delete(categoria);
-        return "redirect:/categoria/listado";
-    }
-    @GetMapping("/modificar/{idCategoria}")
-    public String categoriaModificar(Categoria categoria, Model model) {
-        categoria = categoriaService.getCategoria(categoria);
-        model.addAttribute("categoria", categoria);
-        return "/categoria/modifica";
-    }
- */
-}
  
+    @GetMapping("/modificar/{id}")
+    public String editarCategoria(@PathVariable("id") int id, Model model) {
+        Categoria categoria = categoriaService.getCategoria(new Categoria(id));
+        model.addAttribute("categoria", categoria);
+        return "categorias/modificar";
+    }
+ 
+    @GetMapping("/eliminar/{id}")
+    public String eliminarCategoria(@PathVariable("id") int id) {
+        Categoria categoria = new Categoria();
+        categoria.setIdCategoria(id);
+        categoriaService.delete(categoria);
+        return "redirect:/categorias/listas";
+    }
+ 
+    @PostMapping("/guardar")
+    public String guardarCategoria(Categoria categoria) {
+        categoriaService.save(categoria);
+        return "redirect:/categorias/listas";
+    }
+}

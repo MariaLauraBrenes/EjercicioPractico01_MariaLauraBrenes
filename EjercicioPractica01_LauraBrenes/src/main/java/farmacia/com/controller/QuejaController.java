@@ -6,47 +6,32 @@ package farmacia.com.controller;
 
 import farmacia.com.domain.Queja;
 import farmacia.com.Service.QuejaService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+ 
 @Controller
-@Slf4j
 @RequestMapping("/quejas")
 public class QuejaController {
-    
+ 
     @Autowired
     private QuejaService quejaService;
+ 
+    @PostMapping("/submit")
+    public String submitQueja(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("telefono") String telefono,
+            @RequestParam("email") String email,
+            @RequestParam("direccion") String direccion,
+            RedirectAttributes redirectAttributes) {
+        Queja queja = new Queja(nombre, apellido, telefono, email, direccion);
+        quejaService.save(queja);
+        redirectAttributes.addFlashAttribute("Enviado", "Gracias por su aporte");
+        return "redirect:/quejas";
+    }
 
-    @GetMapping("/listas")
-    public String inicio(Model model) {
-        var quejas = quejaService.getQuejas();
-        model.addAttribute("quejas", quejas);
-        model.addAttribute("totalQuejas", quejas.size());
-        return "/quejas/listas";
-    }
-    
-    /*
-    
-    @GetMapping("/modifica")
-    public String categoriaNuevo(Categoria categoria) {
-        return "/categoria/modifica";
-    }
-    
-    @GetMapping("/eliminar/{idCategoria}")
-    public String categoriaEliminar(Categoria categoria) {
-        categoriaService.delete(categoria);
-        return "redirect:/categoria/listado";
-    }
-    @GetMapping("/modificar/{idCategoria}")
-    public String categoriaModificar(Categoria categoria, Model model) {
-        categoria = categoriaService.getCategoria(categoria);
-        model.addAttribute("categoria", categoria);
-        return "/categoria/modifica";
-    }
- */
 }

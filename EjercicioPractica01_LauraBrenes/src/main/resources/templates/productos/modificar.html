@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${producto?.idMedicamento != null ? #{product.edit} : #{product.add}}">Modificar Producto</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<header th:replace="~{/plantilla/iframe :: header}"></header>
+
+<main class="container mt-5">
+    <h2 th:text="${producto?.idMedicamento != null ? #{product.edit} : #{product.add}}">Editar Producto</h2>
+
+    <form th:action="@{/productos/guardar}" th:object="${producto}" method="post">
+        <div class="mb-3">
+            <label for="nombre" class="form-label" th:text="#{product.name}">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}" required>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label" th:text="#{product.description}">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" th:field="*{descripcion}" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label" th:text="#{product.price}">Precio</label>
+            <input type="number" class="form-control" id="precio" name="precio" th:field="*{precio}" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="stock" class="form-label" th:text="#{product.stock}">Stock</label>
+            <input type="number" class="form-control" id="stock" name="stock" th:field="*{stock}" required>
+        </div>
+        <button type="submit" class="btn btn-success" th:text="#{button.save}">Guardar</button>
+        <a th:href="@{/productos/listas}" class="btn btn-secondary" th:text="#{button.cancel}">Cancelar</a>
+    </form>
+</main>
+
+<footer th:replace="~{/plantilla/iframe :: footer}"></footer>
+</body>
+</html>

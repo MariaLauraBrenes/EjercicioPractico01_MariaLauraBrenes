@@ -18,12 +18,7 @@ public class QuejaServiceImpl implements QuejaService {
     @Autowired
     private QuejaDao quejaDao;
 
-    @Override
-    @Transactional(readOnly=true)
-    public List<Queja> getQuejas() {
-        var lista=quejaDao.findAll();
-        return lista;
-    }
+
     
     @Override
     @Transactional (readOnly = true)
@@ -35,10 +30,6 @@ public class QuejaServiceImpl implements QuejaService {
     public void save(Queja queja) {
          quejaDao.save(queja);
     }
-    @Override
-    @Transactional
-    public void delete(Queja queja) {
-        quejaDao.delete(queja);
-    }
+  
 
 }
